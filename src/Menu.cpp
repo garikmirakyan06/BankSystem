@@ -31,7 +31,6 @@ void Menu::clear_screen() {
 // checking if account with such name alredy exist 
 std::string Menu::choose_valid_name(const Bank& bank) {
     std::string name;
-
     while(true) {
         std::cin >> name;
         if(bank.get_accounts().find(name) != bank.get_accounts().end()) {
@@ -47,10 +46,11 @@ std::string Menu::choose_valid_name(const Bank& bank) {
 
 std::string Menu::choose_valid_password() {
     std::string password;
-
+	std::string pattern = "[0-9]{4}";
+	std::regex regexRule(pattern);
     while(true) {
         std::cin >> password;
-        if(password.size() != 4 || !std::all_of(password.begin(), password.end(), ::isdigit)) {
+        if(!std::regex_match(password, regexRule)) {
             std::cout << "Invalid password. Try again: ";
         } else {
             break;

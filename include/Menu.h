@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <climits>
+#include <regex>
 
 #include "Bank.h"
 #include "Account.h"
