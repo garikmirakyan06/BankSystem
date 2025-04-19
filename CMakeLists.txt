@@ -14,3 +14,5 @@ target_compile_definitions(Banksystem PRIVATE DATA_PATH=\"${DATA_PATH}\")
 
 install(TARGETS Banksystem DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 
+target_link_libraries(Banksystem PRIVATE nlohmann_json::nlohmann_json)
+
