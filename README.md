@@ -46,7 +46,7 @@ This project uses **CMake** for building and supports both local and containeriz
 
 ### Building Locally:
 
-To build the project locally you can just run script `build.sh` that in directory `scripts` 
+To build the project locally you can just run script `build.sh` in directory `scripts` 
    
 ### Docker:
 there is also `Dockerfile` wich will install all necessary dependencies in new environment 
