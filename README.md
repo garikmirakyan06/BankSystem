@@ -31,10 +31,10 @@ The application uses two layers for handling user account data:
    | Insert account    | O(1) avg   |
    | Authenticate user | O(1) avg   |
    | Update account    | O(1) avg   |
-   | Delete account    | O(1) avg   |
+   | Delete account    | O(n) avg   |
    | View customer list| O(n)       |
 
-2. **Persistent Storage**  
+3. **Persistent Storage**  
    All user data is saved and loaded from a JSON file named `data.json`, located in the `data/` folder. The data is written to this file after any account creation, update, or deletion to ensure persistence between sessions.
 
    - The file acts as a simple database.
