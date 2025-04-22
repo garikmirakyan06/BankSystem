@@ -23,7 +23,7 @@ void Menu::clear_screen() {
     #ifdef _WIN32
         system("cls"); // Windows
     #else 
-        system("clear"); // Linux, maxOS
+        system("clear"); // Linux, macOS
     #endif
 }
 
@@ -31,9 +31,10 @@ void Menu::clear_screen() {
 // checking if account with such name alredy exist 
 std::string Menu::choose_valid_name(const Bank& bank) {
     std::string name;
+    const auto& accounts = bank.get_accounts();
     while(true) {
         std::cin >> name;
-        if(bank.get_accounts().find(name) != bank.get_accounts().end()) {
+        if(accounts.find(name) != accounts.end()) {
             std::cout << "Account already exist. Choose another name: ";
         } else {
             break;
@@ -61,18 +62,30 @@ std::string Menu::choose_valid_password() {
     return password;
 }
 
+double Menu::choose_valid_balance() {
+	double balance;
+	while(true) {
+		std::cin >> balance;
+		if(std::cin.fail() || balance < 0) {
+			std::cout << "Invalid balance. Try again: ";
+			std::cin.clear();
+			std::cin.ignore(INT_MAX, '\n');
+		} else break;
+	}
+	return balance;
+}
+
 Account& Menu::authenticate(Bank& bank) {
     std::string name;
     std::string password; 
-
+	auto& accounts = bank.get_accounts();
     do {
         std::cout << "Write your account name: ";
         std::cin >> name;
         std::cout << "Write your password: ";
         std::cin >> password;
-        
-        if(bank.get_accounts().find(name) != bank.get_accounts().end()
-        && bank.get_accounts()[name].get_password() == password) {
+        if(accounts.find(name) != accounts.end()
+        && accounts.at(name).get_password() == password) {
             break;
         }
         std::cout << "\nAccount does not exists, or invalid password. Try again.\n\n";
@@ -80,7 +93,7 @@ Account& Menu::authenticate(Bank& bank) {
         std::cin.ignore(INT_MAX, '\n');
     } while(true);
     std::cout << "\n";
-    return bank.get_accounts()[name];
+    return accounts[name];
     
 }
 
@@ -89,7 +102,7 @@ void Menu::handle_option_1(Bank& bank) {
     clear_screen();
     std::string name;
     std::string password;
-    long long balance;
+    double balance;
 
     std::cout << "\t======================\n";
     std::cout << "\t   CREATE AN ACCOUNT\n";
@@ -102,7 +115,7 @@ void Menu::handle_option_1(Bank& bank) {
     password = choose_valid_password();
 
     std::cout << "\n3) Choose your balance :) ";
-    std::cin >> balance;
+    balance = choose_valid_balance();
 
     bank.create_account(name, password, balance);
 
@@ -140,13 +153,14 @@ void Menu::handle_option_3(Bank& bank) {
     std::cout << "\t  FOR TRANSACTIONS\n";
     std::cout << "\t====================\n";
     
-    Account& account = authenticate(bank);
+    Account& sender = authenticate(bank);
 
     std::cout << "Write the name of account that you want to transact with: ";
     std::string name;
+    const auto& accounts = bank.get_accounts();
     while(true) {
         std::cin >> name;
-        if(bank.get_accounts().find(name) == bank.get_accounts().end()) {
+        if(accounts.find(name) == accounts.end()) {
             std::cout << "Account does not exist. Try again: ";
         } else {
             break;
@@ -156,21 +170,19 @@ void Menu::handle_option_3(Bank& bank) {
     }
     
     std::cout << "\nEnter the amount of money that you want to send: ";
-    long long money;
+    double money;
     while(true) {
         std::cin >> money;
-        if(std::cin.fail() || money < 0 || account.get_balance() < money) {
+        if(std::cin.fail() || money < 0 || sender.get_balance() < money) {
             std::cout << "Invalid input. Try again: ";
-        } else {
-            break;
-        }
+        } else break;
         std::cin.clear();
         std::cin.ignore(INT_MAX, '\n');
     }
 
-    account.set_balance(account.get_balance() - money);
-    Account& account2 = bank.get_accounts()[name];
-    account2.set_balance(account2.get_balance() + money);   
+    sender.set_balance(sender.get_balance() - money);
+    Account& receiver = bank.get_accounts()[name];
+    receiver.set_balance(receiver.get_balance() + money);   
     
     std::cout << "\nTransaction completed successfully.\n";
     wait_for_enter();
@@ -185,7 +197,7 @@ void Menu::handle_option_4(Bank& bank) {
     std::cout << "\t   CHECK DETAILS OF EXISTING ACCOUNT\n";
     std::cout << "\t========================================\n\n";
 
-    Account account = authenticate(bank);
+    Account& account = authenticate(bank);
     std::cout << "\nname: " << account.get_name() << '\n';
     std::cout << "\npassword: " << account.get_password() << '\n';
     std::cout << "\nbalance: " << account.get_balance() << '\n';
@@ -201,7 +213,7 @@ void Menu::handle_option_5(Bank& bank) {
     std::cout << "\t===============================\n\n";
     
     Account& account = authenticate(bank);
-    bank.get_accounts().erase(account.get_name());
+    bank.remove_account(account);
 }
 
 // view customer's list 
@@ -210,12 +222,11 @@ void Menu::handle_option_6(const Bank& bank) {
     std::cout << "\t=========================\n";
     std::cout << "\t   VIEW CUSTOMER`S LIST\n";
     std::cout << "\t=========================\n\n";
-    int i = 1;
-    for(auto account_pair : bank.get_accounts()) {
-        Account account = account_pair.second;
-        std::cout << i << ") " << account.get_name();
+    int index = 1;
+    for(const auto& [_, account] : bank.get_accounts()) {
+        std::cout << index << ") " << account.get_name();
         std::cout << ",  balance - " << account.get_balance() << '\n';
-        i++;
+        index++;
     }
 
     wait_for_enter();
@@ -231,8 +242,8 @@ void Menu::display() {
     std::cout << "\t==========================\n";
     std::cout << "\t  BANK MANAGEMENT SYSTEM\n";
     std::cout << "\t==========================\n";
-    for(int i = 0; i < options.size(); i++) {
-        std::cout << i+1 << ". " << options[i] << '\n';
+    for(int index = 0; index < options.size(); index++) {
+        std::cout << index+1 << ". " << options[index] << '\n';
     }
 }
 

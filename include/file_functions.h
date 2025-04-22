@@ -12,7 +12,7 @@ void initialize_data(const std::string& path, Bank& bank);
 
 // calling function this each time after handling one 
 // option that enter user (only when some data changes) 
-void update_file_data(const std::string path, const Bank& bank);
+void update_file_data(const std::string& path, const Bank& bank);
 
 // deserialization, from given file it creates and returns json object 
 json load_data(const std::string& path);

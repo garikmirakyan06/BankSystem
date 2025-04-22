@@ -2,7 +2,7 @@
 
 
 // from Account object create json object  
-json Account::to_json() {
+json Account::to_json() const {
     return json({{"name", name}, {"password", password}, {"balance", balance}, {"id", id}});
 }
 

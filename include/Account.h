@@ -9,7 +9,7 @@ class Account {
 private:
     std::string name;            
     std::string password;
-    long long balance;
+    double balance;
     int id;
 
 
@@ -17,7 +17,7 @@ private:
 
 public:
     Account() : name(), password(), balance(0), id(-1) {}
-    Account(std::string name, std::string password, long long balance) 
+    Account(const std::string& name, const std::string& password, double balance) 
     : name(name), password(password), balance(balance), id(-1) {
 
     }
@@ -26,10 +26,10 @@ public:
     const std::string& get_name() const {
         return name;
     }
-    std::string get_password() const {
+    const std::string& get_password() const {
         return password;
     }
-    long long get_balance() const {
+    double get_balance() const {
         return balance;
     }
     int get_id() const {
@@ -42,10 +42,10 @@ public:
     void set_name(const std::string& new_name) {
         name = new_name;
     }
-    void set_password(std::string new_password) {
+    void set_password(const std::string& new_password) {
         password = new_password;
     }
-    void set_balance(long long new_balance) {
+    void set_balance(double new_balance) {
         balance = new_balance;
     }
     void set_id(int new_id) {
@@ -54,7 +54,7 @@ public:
 
 
     // from Account object create json object  
-    json to_json();
+    json to_json() const;
     
     // from json object create an object of type Account
     static Account from_json(const json& json_object);

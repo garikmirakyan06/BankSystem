@@ -7,7 +7,7 @@ void initialize_data(const std::string& path, Bank& bank) {
     if(data.empty()) {
         return;
     }
-    for(auto account_json : data) {
+    for(const auto& account_json : data) {
         Account account = Account::from_json(account_json);
         bank.get_accounts()[account.get_name()] = account;
     }
@@ -16,10 +16,11 @@ void initialize_data(const std::string& path, Bank& bank) {
 
 // calling function this each time after handling one 
 // option that enter user (only when some data changes) 
-void update_file_data(const std::string path, const Bank& bank) {
+void update_file_data(const std::string& path, const Bank& bank) {
     json data;
-    for(auto account : bank.get_accounts()) {
-        data[account.first] = account.second.to_json();
+    const auto& accounts = bank.get_accounts();
+    for(const auto& [name, account] : accounts) {
+        data[name] = account.to_json();
     }
     write_in_file(path, data);
 }

@@ -19,5 +19,7 @@ public:
         return accounts;
     }
 
-    void create_account(std::string name, std::string password, long long balance);
+    void create_account(const std::string& name, const std::string& password, double balance);
+	
+	void remove_account(Account& account);
 };

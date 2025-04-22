@@ -21,6 +21,8 @@ private:
 
     // checking if account with such name already exist 
     std::string choose_valid_name(const Bank& bank);
+    
+    double choose_valid_balance();
 
     std::string choose_valid_password();
 
