@@ -4,7 +4,6 @@
 #include <climits>
 #include <regex>
 
-#include "Menu.h"
 #include "Bank.h"
 
 class InputValidator {
