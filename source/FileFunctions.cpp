@@ -1,8 +1,8 @@
-#include "file_functions.h"
+#include "FileFunctions.h"
 
 // when we run the programm, at first we copy 
 // data in our program from json file.
-void initialize_data(const std::string& path, Bank& bank) {
+void FileFunctions::initialize_data(const std::string& path, Bank& bank) {
     json data = load_data(path);
     if(data.empty()) {
         return;
@@ -16,7 +16,7 @@ void initialize_data(const std::string& path, Bank& bank) {
 
 // calling function this each time after handling one 
 // option that enter user (only when some data changes) 
-void update_file_data(const std::string& path, const Bank& bank) {
+void FileFunctions::update_file_data(const std::string& path, const Bank& bank) {
     json data;
     const auto& accounts = bank.get_accounts();
     for(const auto& [name, account] : accounts) {
@@ -27,7 +27,7 @@ void update_file_data(const std::string& path, const Bank& bank) {
 
 
 // deserialization, from given file it creates and returns json object 
-json load_data(const std::string& path) {
+json FileFunctions::load_data(const std::string& path) {
     std::cout << "load_data\n";
     std::ifstream file(path);
     if(!file.is_open()) {
@@ -50,7 +50,7 @@ json load_data(const std::string& path) {
 
 
 // write json object in given file 
-void write_in_file(const std::string& path, const json& data) {
+void FileFunctions::write_in_file(const std::string& path, const json& data) {
     std::ofstream file(path);
     if(!file.is_open()) {
         throw std::runtime_error("Could not open file to write\n");

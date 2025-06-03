@@ -4,7 +4,7 @@ project(Banksystem)
 
 set(CMAKE_CXX_STANDARD 17)
 
-file(GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/source/*.cpp")
+file(GLOB_RECURSE SOURCE_FILES "${CMAKE_SOURCE_DIR}/source/*.cpp")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_SOURCE_DIR}/source/main.cpp")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

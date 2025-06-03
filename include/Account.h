@@ -12,9 +12,6 @@ private:
     double balance;
     int id;
 
-
-    friend class Bank;
-
 public:
     Account() : name(), password(), balance(0), id(-1) {}
     Account(const std::string& name, const std::string& password, double balance) 
@@ -37,8 +34,6 @@ public:
     }
 
     // setters 
-    
-    
     void set_name(const std::string& new_name) {
         name = new_name;
     }

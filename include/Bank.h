@@ -22,4 +22,9 @@ public:
     void create_account(const std::string& name, const std::string& password, double balance);
 	
 	void remove_account(Account& account);
+
+    bool has_account_named(const std::string& name) const;
+
+    Account* authenticate_user(const std::string& name, const std::string& password);
+
 };

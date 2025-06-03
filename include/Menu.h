@@ -1,64 +1,58 @@
-#pragma once
+// #pragma once
 
-#include <iostream>
-#include <climits>
-#include <regex>
+// #include <iostream>
+// #include <climits>
+// #include <regex>
 
-#include "Bank.h"
-#include "Account.h"
+// #include "Bank.h"
+// #include "Account.h"
+// #include "InputValidator.h"
 
-class Menu {
-private:
-    std::vector<std::string> options;
+// class Menu {
+// private:
+//     std::vector<std::string> options;
 
 
-    void initialize();
+//     void initialize();
 
-    // wainting the user to click Enter 
-    void wait_for_enter();
+//     // wainting the user to click Enter 
+//     void wait_for_enter();
 
-    void clear_screen();
+//     void clear_screen();
 
-    // checking if account with such name already exist 
-    std::string choose_valid_name(const Bank& bank);
-    
-    double choose_valid_balance();
+//     Account& authenticate(Bank& bank);
 
-    std::string choose_valid_password();
+//     // Creating new account
+//     void handle_option_1(Bank& bank);
 
-    Account& authenticate(Bank& bank);
+//     // update information of existing account
+//     void handle_option_2(Bank& bank);
 
-    // Creating new account
-    void handle_option_1(Bank& bank);
+//     // for transactions
+//     void handle_option_3(Bank& bank);
 
-    // update information of existing account
-    void handle_option_2(Bank& bank);
+//     // Check the details of existing account
+//     void handle_option_4(Bank& bank);
 
-    // for transactions
-    void handle_option_3(Bank& bank);
+//     // removing existing account
+//     void handle_option_5(Bank& bank);
 
-    // Check the details of existing account
-    void handle_option_4(Bank& bank);
-
-    // removing existing account
-    void handle_option_5(Bank& bank);
-
-    // view customer's list 
-    void handle_option_6(const Bank& bank);
+//     // view customer's list 
+//     void handle_option_6(const Bank& bank);
 
 
 
-public:
-    Menu() : options() {
-        initialize();
-    }
+// public:
+//     Menu() : options() {
+//         initialize();
+//     }
 
-    // initial screen of Main Menu with options
-    void display();
+//     // initial screen of Main Menu with options
+//     void display();
 
-    // user is choosing the option (1-7)
-    int choose();
+//     // user is choosing the option (1-7)
+//     int choose();
 
-    // handling the choice of user 
-    void handle_choice(int choice, Bank& bank);
-};
+//     // handling the choice of user 
+//     void handle_choice(int choice, Bank& bank);
+// };
