@@ -16,9 +16,9 @@ void CustomersListScreen::display() const {
 
 }
 
-Screen* CustomersListScreen::interact() {
+std::shared_ptr<Screen> CustomersListScreen::interact() {
 
     wait_for_enter();
 
-    return new MenuScreen(bank);
+    return std::make_shared<MenuScreen>(bank);
 }

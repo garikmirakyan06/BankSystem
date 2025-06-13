@@ -9,14 +9,14 @@ void RemoveAccountScreen::display() const {
 
 }
 
-Screen* RemoveAccountScreen::interact() {
+std::shared_ptr<Screen> RemoveAccountScreen::interact() {
     // at first authenticate
-    Account* accountPtr = ScreenUtils::authenticate(bank);
-    if(accountPtr == nullptr) { // auth not done
-        return new MenuScreen(bank);
-    }
+    try {
+        Account& account = ScreenUtils::authenticate(bank);
+        bank.remove_account(account);
+        return std::make_shared<MenuScreen>(bank);
+    } catch(const std::runtime_error& e) { // auth not done
     
-    Account& account = *accountPtr;
-    bank.remove_account(account);
-    return new MenuScreen(bank);
+    }
+    return std::make_shared<MenuScreen>(bank);
 }

@@ -10,17 +10,13 @@
 class App {
 private:
     Bank bank;
-    Screen* current_screen = nullptr;
+    std::shared_ptr<Screen> current_screen = nullptr;
     std::string path = DATA_PATH;
 
 
 public:
     App() : current_screen(new MenuScreen(bank)) {
         FileFunctions::initialize_data(path, bank);
-    }
-
-    ~App() {
-        delete current_screen;
     }
 
     void run();

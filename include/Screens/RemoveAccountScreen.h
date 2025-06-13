@@ -3,7 +3,6 @@
 #include "Bank.h"
 #include "Screen.h"
 #include "MenuScreen.h"
-#include "AuthenticateScreen.h"
 #include "ScreenUtils.h"
 
 
@@ -17,5 +16,5 @@ public:
     }
 
     void display() const override;
-    Screen* interact() override;
+    std::shared_ptr<Screen> interact() override;
 };

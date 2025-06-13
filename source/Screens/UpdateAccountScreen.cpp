@@ -9,27 +9,28 @@ void UpdateAccountScreen::display() const {
 }
 
 
-Screen* UpdateAccountScreen::interact() {
+std::shared_ptr<Screen> UpdateAccountScreen::interact() {
     // at first need to authenticate 
-    Account* accountPtr = ScreenUtils::authenticate(bank);
-    if(accountPtr == nullptr) { // auth not done
-        return new MenuScreen(bank);
+    try {
+        Account& account = ScreenUtils::authenticate(bank);
+                
+        std::cout << "Write new name, or press Enter: ";
+        std::string new_name = account.get_name();
+        std::cin.ignore(INT_MAX, '\n');
+        std::getline(std::cin, new_name);
+        if(new_name.empty()) {
+            new_name = account.get_name();
+        }
+
+        std::cout << "Write new password, or press Enter: ";
+        std::string new_password = InputValidator::choose_valid_password();
+            
+        account.set_name(new_name);
+        account.set_password(new_password);
+
+    } catch(const std::runtime_error& e) { // auth not done
+    
     }
-    Account& account = *accountPtr;
 
-    std::cout << "Write new name, or press Enter: ";
-    std::string new_name = account.get_name();
-    std::cin.ignore(INT_MAX, '\n');
-    std::getline(std::cin, new_name);
-    if(new_name.empty()) {
-        new_name = account.get_name();
-    }
-
-    std::cout << "Write new password, or press Enter: ";
-    std::string new_password = InputValidator::choose_valid_password();
-        
-    account.set_name(new_name);
-    account.set_password(new_password);
-
-    return new MenuScreen(bank);
+    return std::make_shared<MenuScreen>(bank);
 }

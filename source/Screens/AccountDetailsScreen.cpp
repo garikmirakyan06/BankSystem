@@ -7,17 +7,19 @@ void AccountDetailsScreen::display() const {
     std::cout << "\t========================================\n\n";
 }
 
-Screen* AccountDetailsScreen::interact() {
+std::shared_ptr<Screen> AccountDetailsScreen::interact() {
     // at first authenticate 
-    Account* accountPtr = ScreenUtils::authenticate(bank);
-    if(accountPtr == nullptr) { // auth not done
-        return new MenuScreen(bank);
+    try {
+        Account& account = ScreenUtils::authenticate(bank);
+        std::cout << "\nname: " << account.get_name() << '\n';
+        std::cout << "\npassword: " << account.get_password() << '\n';
+        std::cout << "\nbalance: " << account.get_balance() << '\n';
+        std::cout << "\nid: " << account.get_id() << '\n';
+        wait_for_enter();
+
+    } catch(const std::runtime_error& e) { // auth not done
+
     }
-    const Account& account = *accountPtr;
-    std::cout << "\nname: " << account.get_name() << '\n';
-    std::cout << "\npassword: " << account.get_password() << '\n';
-    std::cout << "\nbalance: " << account.get_balance() << '\n';
-    std::cout << "\nid: " << account.get_id() << '\n';
-    wait_for_enter();
-    return new MenuScreen(bank);
+
+    return std::make_shared<MenuScreen>(bank);
 }

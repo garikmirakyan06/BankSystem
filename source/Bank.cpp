@@ -23,12 +23,12 @@ bool Bank::has_account_named(const std::string& name) const {
 	return (accounts.find(name) != accounts.end());
 }
 
-Account* Bank::authenticate_user(const std::string& name, const std::string& password) {
+Account& Bank::authenticate_user(const std::string& name, const std::string& password) {
 	if(!has_account_named(name)) {
-		return nullptr;
+		throw std::invalid_argument("No account by name " + name);
 	}
-	if(accounts[name].get_password() == password) {
-		return &accounts[name];
+	if(accounts[name].get_password() != password) {
+		throw std::invalid_argument("Incorrect password");
 	}
-	return nullptr;
+	return accounts[name];
 }

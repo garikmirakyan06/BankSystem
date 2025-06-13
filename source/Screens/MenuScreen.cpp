@@ -40,31 +40,31 @@ int MenuScreen::choose() const {
 
 
 
-Screen* MenuScreen::handle_choice(int choice) const {
+std::shared_ptr<Screen> MenuScreen::handle_choice(int choice) const {
     switch (choice)
     {
     case 1:
-        return new CreateAccountScreen(bank);
+        return std::make_shared<CreateAccountScreen>(bank);
         break;
 
     case 2:
-        return new UpdateAccountScreen(bank);
+        return std::make_shared<UpdateAccountScreen>(bank);
         break;
 
     case 3:
-        return new TransactionsScreen(bank);
+        return std::make_shared<TransactionsScreen>(bank);
         break;
 
     case 4:
-        return new AccountDetailsScreen(bank);
+        return std::make_shared<AccountDetailsScreen>(bank);
         break;
 
     case 5:
-        return new RemoveAccountScreen(bank);
+        return std::make_shared<RemoveAccountScreen>(bank);
         break;
 
     case 6:
-        return new CustomersListScreen(bank);
+        return std::make_shared<CustomersListScreen>(bank);
         break;
 
     case 7:
@@ -79,9 +79,9 @@ Screen* MenuScreen::handle_choice(int choice) const {
 }
 
 
-Screen* MenuScreen::interact() {
+std::shared_ptr<Screen> MenuScreen::interact() {
     int choice = choose();
-    Screen* next_screen = handle_choice(choice);
+    std::shared_ptr<Screen> next_screen = handle_choice(choice);
     return next_screen;
 }
 

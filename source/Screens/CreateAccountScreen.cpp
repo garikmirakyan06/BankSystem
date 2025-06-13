@@ -10,7 +10,7 @@ void CreateAccountScreen::display() const {
 
 }
 
-Screen* CreateAccountScreen::interact() {
+std::shared_ptr<Screen> CreateAccountScreen::interact() {
     std::string name;
     std::string password;
     double balance;
@@ -30,5 +30,5 @@ Screen* CreateAccountScreen::interact() {
 
     wait_for_enter();
 
-    return new MenuScreen(bank);
+    return std::make_shared<MenuScreen>(bank);
 }

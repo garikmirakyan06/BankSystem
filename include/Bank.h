@@ -18,6 +18,7 @@ public:
     std::unordered_map<std::string, Account>& get_accounts() {
         return accounts;
     }
+    
 
     void create_account(const std::string& name, const std::string& password, double balance);
 	
@@ -25,6 +26,6 @@ public:
 
     bool has_account_named(const std::string& name) const;
 
-    Account* authenticate_user(const std::string& name, const std::string& password);
+    Account& authenticate_user(const std::string& name, const std::string& password);
 
 };

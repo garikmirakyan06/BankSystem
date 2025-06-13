@@ -15,5 +15,5 @@ public:
     }
 
     void display() const override;
-    Screen* interact() override;
+    std::shared_ptr<Screen> interact() override;
 };

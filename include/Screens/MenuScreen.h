@@ -21,7 +21,7 @@ private:
     Bank& bank;    
 
     void init_options();
-    Screen* handle_choice(int) const;
+    std::shared_ptr<Screen> handle_choice(int) const;
     int choose() const;
 public:
     MenuScreen(Bank& _bank) : bank(_bank) {
@@ -29,7 +29,7 @@ public:
     }
 
     void display() const override;
-    Screen* interact() override;   
+    std::shared_ptr<Screen> interact() override;   
 };
 
 
