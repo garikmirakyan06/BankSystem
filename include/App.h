@@ -15,7 +15,7 @@ private:
 
 
 public:
-    App() : current_screen(new MenuScreen(bank)) {
+    App() : current_screen(std::make_shared<MenuScreen>(bank)) {
         FileFunctions::initialize_data(path, bank);
     }
 
